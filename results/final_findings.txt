@@ -1,0 +1,67 @@
+FINAL FORENSIC FINDINGS
+=======================
+
+Case:
+2013 Target Cyber Attack - Academic Forensic Demonstration
+
+Finding 1 - Suspicious POS Artifact
+------------------------------------
+The simulated executable was successfully detected by YARA using
+two indicators associated with POS data collection and HTTP-style
+transmission.
+
+Finding 2 - Static Program Behavior
+-----------------------------------
+Rizin analysis identified:
+- collect_card_data()
+- send_data()
+- main()
+
+The main function calls the collection function followed by the
+transmission function.
+
+Finding 3 - Memory Analysis
+---------------------------
+Volatility successfully demonstrated:
+- Operating-system identification
+- Process enumeration
+- Process-tree reconstruction
+- Command-line analysis
+- Suspicious memory-region identification
+- File-object recovery
+
+Finding 4 - Evidence Integrity
+------------------------------
+The simulated executable was hashed using SHA-256:
+
+a3bbc638b04beb7524d809808938c3a634758f32e17d17d73c8946f733cc534e
+
+Finding 5 - Tool Limitations
+----------------------------
+Volatility netscan was not supported for the Windows XP memory image.
+Volatility dumpfiles did not return a cached file for the selected
+file object.
+
+These limitations were documented and no unsupported conclusions
+were drawn.
+
+IMPORTANT EVIDENCE QUALIFICATION
+--------------------------------
+The Target 2013 incident is the case-study context.
+
+The executable analyzed with YARA and Rizin is artificially generated
+for this academic demonstration.
+
+The memory image analyzed with Volatility is a publicly available
+forensic sample and is unrelated to the Target incident.
+
+Therefore, the technical findings demonstrate forensic methodology
+and tool functionality; they must not be presented as original
+forensic findings from Target Corporation.
+
+CONCLUSION
+----------
+The investigation demonstrates a complete academic forensic workflow:
+case understanding -> evidence preservation -> detection ->
+static analysis -> memory analysis -> correlation -> reporting.
+

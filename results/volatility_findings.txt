@@ -1,0 +1,62 @@
+VOLATILITY 3 FINDINGS
+=====================
+
+Memory Image:
+stuxnet.vmem
+
+Important:
+This is a publicly available forensic memory sample used only to demonstrate
+the Volatility workflow. It is NOT original Target 2013 forensic evidence.
+
+1. windows.info
+- Operating system: Windows XP
+- Architecture: 32-bit
+- PAE: Enabled
+- Processor count: 1
+- System time: 2011-06-03 04:31:36 UTC
+- Kernel base: 0x804d7000
+
+2. windows.pslist
+- Enumerated active processes from memory.
+- cmd.exe (PID 968) was identified.
+- ipconfig.exe (PID 304) appeared as a child process of cmd.exe.
+- Both processes were created immediately before the captured system time.
+
+3. windows.pstree
+- Confirmed process relationships.
+- vmtoolsd.exe -> cmd.exe -> ipconfig.exe relationship was observed.
+
+4. windows.cmdline
+- Recovered command-line context for processes.
+- Some processes did not expose useful command-line arguments.
+
+5. windows.malfind
+- Identified potentially suspicious executable/executable-writable
+  memory regions.
+- services.exe and svchost.exe contained regions requiring further analysis.
+- Some regions contained an MZ header.
+- These findings are indicators, not proof of malicious activity.
+
+6. windows.filescan
+- Recovered file objects from memory.
+- A suspicious-looking executable path was identified:
+  \Documents and Settings\Administrator\Desktop\
+  74ddc49a7c121a61b8d06c03f92d0c13.exe
+
+7. windows.netscan
+- Attempted but unsupported for this Windows XP memory image by the
+  current Volatility 3 implementation.
+- No network conclusions were drawn from this plugin.
+
+8. windows.dumpfiles
+- Attempted to extract the recovered executable.
+- No cached file result was returned for the selected file object.
+- Therefore, no extracted executable was treated as evidence.
+
+Conclusion:
+Volatility successfully demonstrated memory acquisition analysis,
+process enumeration, process-tree reconstruction, command-line analysis,
+memory anomaly detection, and file-object recovery.
+Unsupported or unsuccessful plugins were documented rather than
+interpreted as negative evidence.
+

@@ -1,0 +1,35 @@
+FORENSIC EVIDENCE LOG
+=====================
+
+Case: 2013 Target Cyber Attack - Academic Forensic Demonstration
+
+Evidence ID: E-001
+Evidence Name: pos_update
+Evidence Path: evidence/pos_update
+Evidence Type: Simulated executable
+Purpose: Demonstrate forensic analysis of a POS-related suspicious executable
+
+SHA-256:
+a3bbc638b04beb7524d809808938c3a634758f32e17d17d73c8946f733cc534e
+
+Analysis Tools:
+- YARA 4.5.8
+- Rizin 0.9.1
+- Volatility 3.2.28.2
+
+YARA Finding:
+Target_POS_Suspicious
+Matched indicators:
+- Collecting card data from POS memory
+- POST /upload HTTP/1.1
+
+Rizin Findings:
+- ELF64 x86-64 Linux executable
+- Function collect_card_data()
+- Function send_data()
+- main() calls collect_card_data() followed by send_data()
+
+Important Limitation:
+This executable is artificially generated for academic demonstration.
+It is not original Target forensic evidence.
+

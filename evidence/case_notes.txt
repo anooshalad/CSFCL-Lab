@@ -1,0 +1,25 @@
+TARGET 2013 FORENSIC DEMONSTRATION
+===================================
+
+Case:
+2013 Target Cyber Attack
+
+Evidence type:
+SIMULATED ACADEMIC EVIDENCE
+
+Purpose:
+Demonstrate a forensic investigation workflow using Kali Linux tools.
+
+Scenario:
+A simulated POS workstation is suspected of compromise.
+The investigator must identify suspicious process activity,
+network activity, and a suspicious executable.
+
+Important:
+This evidence is artificially generated for academic demonstration.
+It is NOT original Target forensic evidence.
+
+Investigation tools:
+1. Volatility 3 - Memory Forensics
+2. YARA - Malware Detection
+3. Rizin - Reverse Engineering

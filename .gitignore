@@ -1,0 +1,6 @@
+memory/*.vmem
+memory/*.raw
+memory/*.mem
+memory/*.dmp
+*.zip
+__pycache__/

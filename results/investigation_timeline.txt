@@ -1,0 +1,92 @@
+FORENSIC INVESTIGATION TIMELINE
+===============================
+
+CASE: 2013 Target Cyber Attack
+TYPE: Academic forensic demonstration
+
+PHASE 1 - CASE UNDERSTANDING
+----------------------------
+Study the Target 2013 attack scenario and identify the relevant
+forensic objectives:
+- Identify suspicious POS-related activity.
+- Identify suspicious executable behavior.
+- Identify possible data collection and transmission indicators.
+- Preserve and document evidence.
+
+PHASE 2 - EVIDENCE PRESERVATION
+-------------------------------
+Evidence E-001:
+Simulated POS executable: evidence/pos_update
+
+SHA-256:
+a3bbc638b04beb7524d809808938c3a634758f32e17d17d73c8946f733cc534e
+
+The hash provides an integrity reference for the analyzed artifact.
+
+PHASE 3 - MALWARE/INDICATOR DETECTION
+-------------------------------------
+Tool: YARA
+
+Rule: Target_POS_Suspicious
+
+Matched indicators:
+- "Collecting card data from POS memory"
+- "POST /upload HTTP/1.1"
+
+Result:
+The rule matched because 2 of the defined indicators were present.
+
+PHASE 4 - STATIC BINARY ANALYSIS
+--------------------------------
+Tool: Rizin
+
+Findings:
+- ELF64 x86-64 Linux executable.
+- collect_card_data() function identified.
+- send_data() function identified.
+- main() calls collect_card_data() followed by send_data().
+- Static strings indicate simulated POS data collection and
+  HTTP-style transmission behavior.
+
+PHASE 5 - MEMORY FORENSICS
+--------------------------
+Tool: Volatility 3
+
+Public forensic memory sample:
+stuxnet.vmem
+
+Important:
+This memory image is not Target evidence. It is used to demonstrate
+the memory-forensics procedure because original Target memory evidence
+is not available for this academic demonstration.
+
+Performed:
+- windows.info
+- windows.pslist
+- windows.pstree
+- windows.cmdline
+- windows.malfind
+- windows.filescan
+
+Limitations:
+- windows.netscan was unsupported for this Windows XP image.
+- windows.dumpfiles did not return a cached file for the selected
+  file object.
+
+PHASE 6 - CORRELATION
+---------------------
+YARA provides indicator-based detection.
+Rizin provides static analysis of executable behavior.
+Volatility demonstrates analysis of volatile memory.
+
+The three workflows demonstrate complementary forensic techniques.
+
+PHASE 7 - CONCLUSION
+--------------------
+The demonstration shows how an investigator can:
+1. Preserve and hash evidence.
+2. Detect suspicious indicators.
+3. Reverse-engineer a suspicious executable.
+4. Examine volatile memory.
+5. Correlate findings while explicitly documenting limitations.
+

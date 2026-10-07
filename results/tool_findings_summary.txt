@@ -1,0 +1,97 @@
+TOOL FINDINGS SUMMARY
+=====================
+
+1. VOLATILITY 3 - MEMORY FORENSICS
+----------------------------------
+Purpose:
+Analyze volatile memory and reconstruct activity that existed in RAM.
+
+Evidence:
+Public forensic memory sample: stuxnet.vmem
+
+Demonstrated functions:
+- windows.info
+- windows.pslist
+- windows.pstree
+- windows.cmdline
+- windows.malfind
+- windows.filescan
+
+Key findings:
+- Windows XP 32-bit memory image identified.
+- Process activity and parent-child relationships reconstructed.
+- cmd.exe -> ipconfig.exe relationship identified.
+- Potentially suspicious executable/executable-writable memory regions identified.
+- File objects recovered from memory.
+
+Limitations:
+- windows.netscan unsupported for this Windows XP image.
+- windows.dumpfiles produced no cached file for the selected object.
+
+Interpretation:
+Memory findings are indicators requiring correlation and are not
+automatically evidence of malicious activity.
+
+2. YARA - INDICATOR-BASED DETECTION
+-----------------------------------
+Purpose:
+Detect known or defined textual/byte indicators within files.
+
+Rule:
+Target_POS_Suspicious
+
+Condition:
+2 of 3 indicators must match.
+
+Matched indicators:
+- Collecting card data from POS memory
+- POST /upload HTTP/1.1
+
+Result:
+Target_POS_Suspicious matched evidence/pos_update.
+
+Interpretation:
+The simulated executable contains at least two indicators defined
+by the detection rule.
+
+3. RIZIN - STATIC REVERSE ENGINEERING
+-------------------------------------
+Purpose:
+Examine executable structure, functions, strings and assembly
+without executing the binary.
+
+Binary:
+evidence/pos_update
+
+Findings:
+- ELF64
+- x86-64
+- Linux
+- C/GCC executable
+- collect_card_data() identified.
+- send_data() identified.
+- main() calls collect_card_data() and then send_data().
+
+Static behavior:
+collect_card_data() constructs simulated track data and references
+POS collection strings.
+
+send_data() references:
+- POST /upload HTTP/1.1
+- Content-Type: application/octet-stream
+
+Interpretation:
+The binary contains simulated collection-to-transmission logic.
+This represents intended behavior of the academic artifact and does
+not establish actual network exfiltration.
+
+OVERALL CORRELATION
+-------------------
+Volatility demonstrates memory forensics.
+YARA demonstrates indicator detection.
+Rizin demonstrates static reverse engineering.
+
+Together they demonstrate complementary stages of a forensic
+investigation while keeping simulated evidence separate from the
+public forensic memory sample.
+
